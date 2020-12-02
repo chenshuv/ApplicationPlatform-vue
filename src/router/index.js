@@ -42,7 +42,7 @@ const routes = [
       {
         path : 'table',
         component: Table,
-        chiildren:[
+        children:[
           {
             path : 'scholarship',
             component: Scholarship

@@ -28,7 +28,7 @@
                         <polygon points="385 349,278 369,312 282" fill="#ffffff2b" />
                     </svg>
                     <el-dropdown>
-                        <i class="el-icon-setting" style="margin-right: 15px"></i>
+                        <i class="el-icon-more-outline" style="margin-right: 15px"></i>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item>查看</el-dropdown-item>
                             <el-dropdown-item>新增</el-dropdown-item>
@@ -38,33 +38,25 @@
                 </el-header>
 
                 <el-container style="border-radius: 10px">
-                    <el-aside width="200px" style="background-color: rgb(238, 241, 246);border-radius: 8px">
-                        <el-menu :default-openeds="['1']">
+                    <el-aside width="200px" style="background-color: rgb(238, 241, 246);border-radius: 8px; height: 529px">
+                        <el-menu :default-openeds="['1']" hight="500px">
                             <el-submenu index="1">
-                                <template slot="title"><i class="el-icon-message"></i>个人信息</template>
+                                <template slot="title"><i class="el-icon-message" style="font-size: 15px"> 申请提交</i></template>
                                 <el-menu-item index="1-1">信息更改</el-menu-item>
                             </el-submenu>
                             <el-submenu index="2">
-                                <template slot="title"><i class="el-icon-menu"></i>奖学金</template>
-                                <el-menu-item index="2-1">申请</el-menu-item>
-                                <el-menu-item index="2-2">查看</el-menu-item>
-                                <el-menu-item index="2-3">更改</el-menu-item>
-                            </el-submenu>
-                            <el-submenu index="3">
-                                <template slot="title"><i class="el-icon-menu"></i>助学金</template>
-                                <el-menu-item index="3-1">申请</el-menu-item>
-                                <el-menu-item index="3-2">查看</el-menu-item>
-                                <el-menu-item index="3-3">更改</el-menu-item>
+                                <template slot="title"><i class="el-icon-setting" style="font-size: 15px"> 申请管理</i></template>
+                                <el-menu-item index="2-1">我的申请</el-menu-item>
+                                <el-menu-item index="2-2">申请更正</el-menu-item>
                             </el-submenu>
                             <el-submenu index="4">
-                                <template slot="title"><i class="el-icon-menu"></i>助学贷款</template>
-                                <el-menu-item index="4-1">申请</el-menu-item>
-                                <el-menu-item index="4-2">查看</el-menu-item>
-                                <el-menu-item index="4-3">更改</el-menu-item>
+                                <template slot="title"><i class="el-icon-user" style="font-size: 15px"> 个人信息管理</i></template>
+                                <el-menu-item index="3-1">个人信息查看</el-menu-item>
+                                <el-menu-item index="3-2">个人信息更改</el-menu-item>
                             </el-submenu>
                         </el-menu>
                     </el-aside>
-                    <el-main style="height: 730px">
+                    <el-main style="height: 600px">
                         <router-view></router-view>
                     </el-main>
                 </el-container>

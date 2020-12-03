@@ -39,10 +39,12 @@
 
                 <el-container style="border-radius: 10px">
                     <el-aside width="200px" style="background-color: rgb(238, 241, 246);border-radius: 8px; height: 529px">
-                        <el-menu :default-openeds="['1']" hight="500px">
+                        <el-menu :default-openeds="['1']" hight="500px" router>
                             <el-submenu index="1">
                                 <template slot="title"><i class="el-icon-message" style="font-size: 15px"> 申请提交</i></template>
-                                <el-menu-item index="1-1">信息更改</el-menu-item>
+                                <el-menu-item index="scholarship">奖学金申请</el-menu-item>
+                                <el-menu-item index="grant">助学金申请</el-menu-item>
+                                <el-menu-item index="load">助学贷款申请</el-menu-item>
                             </el-submenu>
                             <el-submenu index="2">
                                 <template slot="title"><i class="el-icon-setting" style="font-size: 15px"> 申请管理</i></template>
@@ -56,7 +58,7 @@
                             </el-submenu>
                         </el-menu>
                     </el-aside>
-                    <el-main style="height: 600px">
+                    <el-main style="height: 520px">
                         <router-view></router-view>
                     </el-main>
                 </el-container>

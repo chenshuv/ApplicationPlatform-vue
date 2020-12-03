@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="height: 500px;width: 600px">
         <el-form :model="form" label-width="120px" label-position="left">
             <el-form-item label="成绩排名总人数">
                 <el-col :span="8">

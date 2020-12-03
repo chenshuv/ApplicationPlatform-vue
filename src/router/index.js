@@ -8,6 +8,8 @@ import Table from '../views/Table.vue';
 import Scholarship from '../views/Scholarship.vue'
 import Grant from '../views/Grant.vue'
 import Load from "../views/Load.vue";
+import Information from "../views/Information.vue";
+import Application from "../views/Application.vue";
 
 Vue.use(VueRouter)
 
@@ -54,6 +56,14 @@ const routes = [
           {
             path : 'load',
             component: Load
+          },
+          {
+            path : 'information',
+            component: Information
+          },
+          {
+            path : 'application',
+            component: Application
           }
         ]
       }

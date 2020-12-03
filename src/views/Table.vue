@@ -39,22 +39,21 @@
 
                 <el-container style="border-radius: 10px">
                     <el-aside width="200px" style="background-color: rgb(238, 241, 246);border-radius: 8px; height: 529px">
-                        <el-menu :default-openeds="['1']" hight="500px" router>
+                        <el-menu :default-openeds="['1','2','3']" hight="500px" router>
                             <el-submenu index="1">
                                 <template slot="title"><i class="el-icon-message" style="font-size: 15px"> 申请提交</i></template>
-                                <el-menu-item index="scholarship">奖学金申请</el-menu-item>
-                                <el-menu-item index="grant">助学金申请</el-menu-item>
-                                <el-menu-item index="load">助学贷款申请</el-menu-item>
+                                <el-menu-item index="/table/scholarship">奖学金申请</el-menu-item>
+                                <el-menu-item index="/table/grant">助学金申请</el-menu-item>
+                                <el-menu-item index="/table/load">助学贷款申请</el-menu-item>
                             </el-submenu>
                             <el-submenu index="2">
                                 <template slot="title"><i class="el-icon-setting" style="font-size: 15px"> 申请管理</i></template>
-                                <el-menu-item index="2-1">我的申请</el-menu-item>
+                                <el-menu-item index="/table/application">我的申请</el-menu-item>
                                 <el-menu-item index="2-2">申请更正</el-menu-item>
                             </el-submenu>
-                            <el-submenu index="4">
+                            <el-submenu index="3">
                                 <template slot="title"><i class="el-icon-user" style="font-size: 15px"> 个人信息管理</i></template>
-                                <el-menu-item index="3-1">个人信息查看</el-menu-item>
-                                <el-menu-item index="3-2">个人信息更改</el-menu-item>
+                                <el-menu-item index="/table/information">个人信息查改</el-menu-item>
                             </el-submenu>
                         </el-menu>
                     </el-aside>

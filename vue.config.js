@@ -25,7 +25,7 @@ module.exports = {
                 }
             },
             '/api': {
-                target: 'http://127.0.0.1/applicationPlatform/public/index.php/index/',  //跨域地址
+                target: 'http://chenshuv.top/ApplicationPlatform-tp5/public/index.php/index/',  //跨域地址
                 changeOrigin: true,  // 是否跨域
                 ws: true,  // 是否使用https
                 pathRewrite: {
@@ -33,7 +33,16 @@ module.exports = {
                     // 此处可以理解为 '/api' 代替了 target 里面的地址，后面的组件中，调用接口的时候直接用 /api 替代
                     // 比如，调用 http://xx.xx.xx.xxx:xxxx/api/row4 ，直接写 /api/row4 即可
                 }
+            },
+            '/chenshuv': {
+                target: 'http://chenshuv.top/ApplicationPlatform-tp5/public/index.php/index/',
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                    '^/chenshuv': ''
+                }
             }
+
         },
         before: app => {
         }

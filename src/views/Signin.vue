@@ -71,14 +71,24 @@
                         <h3>注 册 账 户</h3>
 
                         <el-form style="width: 100%" :model="registerForm" :rules="registerRules" ref="registerForm" class="registerForm">
-                            <el-form-item prop="username">
-                                <el-input v-bind= "loginForm.password" v-model="registerForm.username" placeholder="请输入你的用户名" onfocus="this.placeholder=''" onblur="this.placeholder='请输入你的用户名'"></el-input>
-                            </el-form-item>
-                            <el-form-item prop="password">
-                                <el-input v-model="registerForm.password" placeholder="请输入你的密码" onfocus="this.placeholder=''" onblur="this.placeholder='请输入你的密码'"></el-input>
-                            </el-form-item>
                             <el-form-item prop="email">
                                 <el-input v-model="registerForm.email" placeholder="请输入你的邮箱" onfocus="this.placeholder=''" onblur="this.placeholder='请输入你的邮箱'"></el-input>
+                            </el-form-item>
+                            <el-form-item prop="password">
+                                <el-input v-model="registerForm.password" placeholder="请输入你的密码" onfocus="this.placeholder=''" onblur="this.placeholder='请输入你的密码'" show-password></el-input>
+                            </el-form-item>
+                            <el-form-item prop="confirm">
+                                <el-input v-model="registerForm.confirm" placeholder="请再次输入你的密码" onfocus="this.placeholder=''" onblur="this.placeholder='请再次输入你的密码'" show-password></el-input>
+                            </el-form-item>
+                            <el-form-item prop="code">
+                                <el-row :gutter="20">
+                                    <el-col :span="16">
+                                        <el-input v-model="registerForm.code" placeholder="请输入验证码" onfocus="this.placeholder=''" onblur="this.placeholder='请输入你的验证码'"></el-input>
+                                    </el-col>
+                                    <el-col :span="8">
+                                        <el-button type="button" size="small" class="el-button" :disabled="codeButton.disable" @click="getCode(registerForm.email)">{{ codeButton.content }} </el-button>
+                                    </el-col>
+                                </el-row>
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="submit" @click="register('registerForm')" plain>注 册</el-button>
@@ -94,11 +104,11 @@
                         <h3>用 户 登 录</h3>
 
                         <el-form style="width: 100%" :model="loginForm" :rules="loginRules" ref="loginForm" class="loginForm">
-                            <el-form-item prop="username">
-                                <el-input v-model="loginForm.username" placeholder="请输入你的用户名" onfocus="this.placeholder=''" onblur="this.placeholder='请输入你的用户名'"></el-input>
+                            <el-form-item prop="email">
+                                <el-input v-model="loginForm.email" placeholder="请输入你的邮箱" onfocus="this.placeholder=''" onblur="this.placeholder='请输入你的邮箱'"></el-input>
                             </el-form-item>
                             <el-form-item prop="password">
-                                <el-input v-model="loginForm.password" placeholder="请输入你的密码" onfocus="this.placeholder=''" onblur="this.placeholder='请输入你的密码'"></el-input>
+                                <el-input v-model="loginForm.password" placeholder="请输入你的密码" onfocus="this.placeholder=''" onblur="this.placeholder='请输入你的密码'" show-password></el-input>
                             </el-form-item>
                             <el-link href="https://element.eleme.io">忘记密码？</el-link>
                             <el-form-item>
@@ -116,33 +126,39 @@
 
 <script>
     export default {
-        name: "Home",
+        name: "Signin",
         data() {
             return {
                 signup: false,
+                codeButton: {
+                  content: '发送验证码',
+                  totalTime: 60,
+                  disable: false
+                },
                 registerForm: {
-                    username: '',
+                    email: '',
                     password: '',
-                    email: ''
+                    confirm: '',
+                    code: ''
                 },
                 loginForm: {
-                    username: '',
+                    email: '',
                     password: '',
                 },
                 registerRules: {
-                    username: [
+                    email: [
                         { required: true, message: '用户名不能为空', trigger: 'blur' }
                     ],
                     password:[
                         { required: true, message: '密码不能为空', trigger: 'blur' }
                     ],
-                    email:[
-                        { required: true, message: '邮箱不能为空', trigger: 'blur' }
+                    confirm:[
+                        { required: true, message: '请再次输入', trigger: 'blur' }
                     ]
                 },
                 loginRules: {
-                    username: [
-                        { required: true, message: '用户名不能为空', trigger: 'blur' }
+                    email: [
+                        { required: true, message: '邮箱不能为空', trigger: 'blur' }
                     ],
                     password:[
                         { required: true, message: '密码不能为空', trigger: 'blur' }
@@ -189,15 +205,45 @@
                 const _this = this
                 this.$refs[loginForm].validate((valid) => {
                     if (valid) {
-                        axios.post('/api/user/login',
+                        axios.post('/chenshuv/student/login',
                             this.loginForm).then(function(resp){
-                            if(resp.data.status === 200){
+                            if(resp.data.code === 200){
+                                sessionStorage.setItem('jzd_id', resp.data.student_id)
                                 _this.$alert('登录成功！', '消息', {
                                     confirmButtonText: '确定',
                                     callback: action => {
-                                        _this.$router.push({name:'index'})
+                                        _this.$router.push({name:'information'})
                                     }
                                 })
+                            }else{
+                                console.log(resp.data)
+                                _this.$alert(resp.data.msg, '消息', {
+                                    confirmButtonText: '确定',
+                                });
+                            }
+                        }).catch((error) => {
+                            console.warn('Not good man :(');
+                        })
+                    } else {
+                        return false;
+                    }
+                })
+            },
+            register(registerForm){
+                const _this = this
+                this.$refs[registerForm].validate((valid) => {
+                    if (valid) {
+                        axios.post('/chenshuv/student/register',
+                            this.registerForm).then(function(resp){
+                            if(resp.data.code === 200){
+                                //sessionStorage.setItem('jzd_id', resp.data.student_id)
+                                _this.$alert('注册成功！', '消息', {
+                                    confirmButtonText: '确定',
+                                    // callback: action => {
+                                    //   _this.$router.push('/BookManage')
+                                    // }
+                                })
+                                _this.resetForm(registerForm)
                             }else{
                                 console.log(resp.data)
                                 _this.$alert(resp.data.msg, '消息', {
@@ -212,30 +258,31 @@
                     }
                 })
             },
-            register(registerForm){
+            getCode(email){
+                if(this.codeButton.disable){
+                    return
+                }
                 const _this = this
-                this.$refs[registerForm].validate((valid) => {
-                    if (valid) {
-                        axios.post('/api/user/register',
-                            this.registerForm).then(function(resp){
-                            if(resp.data.status === 200){
-                                _this.$alert('注册成功！', '消息', {
-                                    confirmButtonText: '确定',
-                                    // callback: action => {
-                                    //   _this.$router.push('/BookManage')
-                                    // }
-                                })
-                            }else{
-                                console.log(resp.data)
-                                _this.$alert(resp.data.msg, '消息', {
-                                    confirmButtonText: '确定',
-                                })
-                            }
-                        }).catch((error) => {
-                            console.warn('Not good man :(');
+                axios.post('/chenshuv/student/getCode',{email:email}).then(function(resp){
+                    if(resp.status === 200){
+                        _this.$alert('验证码发送成功！', '消息', {
+                            confirmButtonText: '确定',
                         })
-                    } else {
-                        return false;
+                        _this.codeButton.disable = true
+                        _this.codeButton.content = _this.codeButton.totalTime + 's后重新发送'
+                        let clock = window.setInterval(() => {
+                            _this.codeButton.totalTime--
+                            _this.codeButton.content = _this.codeButton.totalTime + 's后重新发送'
+                            if(_this.codeButton.totalTime < 0){
+                                _this.codeButton.content = '重新发送验证码'
+                                _this.codeButton.totalTime = 60
+                                _this.codeButton.disable = false
+                            }
+                        },1000)
+                    }else{
+                        _this.$alert('发送失败', '消息', {
+                            confirmButtonText: '确定',
+                        })
                     }
                 })
             }

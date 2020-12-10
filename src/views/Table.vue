@@ -30,9 +30,7 @@
                     <el-dropdown>
                         <i class="el-icon-more-outline" style="margin-right: 15px"></i>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item>查看</el-dropdown-item>
-                            <el-dropdown-item>新增</el-dropdown-item>
-                            <el-dropdown-item>删除</el-dropdown-item>
+                            <el-dropdown-item @click.native="loginOut">退出登陆</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </el-header>
@@ -49,7 +47,7 @@
                             <el-submenu index="2">
                                 <template slot="title"><i class="el-icon-setting" style="font-size: 15px"> 申请管理</i></template>
                                 <el-menu-item index="/table/application">我的申请</el-menu-item>
-                                <el-menu-item index="2-2">申请更正</el-menu-item>
+                                <el-menu-item index="/table/change">申请更正</el-menu-item>
                             </el-submenu>
                             <el-submenu index="3">
                                 <template slot="title"><i class="el-icon-user" style="font-size: 15px"> 个人信息管理</i></template>
@@ -79,6 +77,28 @@
             };
             return {
 
+            }
+        },
+        methods: {
+            loginOut: function () {
+                const _this = this
+                axios.post('/chenshuv/student/logout').then(function (resp) {
+                    if (resp.data.code === 200) {
+                        sessionStorage.removeItem('jzd_id')
+                        _this.$alert('退出成功！', '消息', {
+                            confirmButtonText: '确定',
+                            callback: action => {
+                                _this.$router.push({name: 'signin'})
+                            }
+                        })
+
+                    } else {
+                        console.log(resp.data)
+                        _this.$alert(resp.data.msg, '消息', {
+                            confirmButtonText: '确定',
+                        });
+                    }
+                })
             }
         }
     }
